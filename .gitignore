@@ -1,0 +1,6 @@
+/data/*
+!/data/config_global.ini
+/ISN AutoIt Studio/
+/tools/
+/ISN_AUTOIT_STUDIO_V_0_88_BETA_COMPILED.zip
+/Thumbs.db
