@@ -4,9 +4,9 @@
 
 Func _stringReplaceVariables($string)
    Local $stringCache=$string
-   
+
    If StringInStr($string,"@")<>0 Then
-   
+
       $stringCache=StringReplace($stringCache,"@AppDataCommonDir",@AppDataCommonDir)
       $stringCache=StringReplace($stringCache,"@DesktopCommonDir",@DesktopCommonDir)
       $stringCache=StringReplace($stringCache,"@DocumentsCommonDir",@DocumentsCommonDir)
@@ -69,14 +69,14 @@ Func _stringReplaceVariables($string)
       $stringCache=StringReplace($stringCache,"@AutoItPID",@AutoItPID)
       $stringCache=StringReplace($stringCache,"@AutoItVersion",@AutoItVersion)
       $stringCache=StringReplace($stringCache,"@AutoItX64",@AutoItX64)
-      
+
    EndIf
 
    If StringInStr($string,"%")<>0 Then
       $stringCache=StringReplace($stringCache,"%grid%",_pathGetSpecificDirByName(@ScriptDir,"grid"))
-      $stringCache=StringReplace($stringCache,"%sabox%",_pathGetSpecificDirByName(@ScriptDir,"sabox"))
+      $stringCache=StringReplace($stringCache,"%prog%",_pathGetSpecificDirByName(@ScriptDir,"prog"))
    EndIf
-   
+
    ;relative path
    If StringLeft($stringCache,1)="\" And StringLeft($stringCache,2)<>"\\" Then $stringCache=@ScriptDir&$stringCache
 

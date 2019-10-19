@@ -19,6 +19,7 @@
 #include-once
 #include <_fpqui.au3>
 #include <_log.au3>
+#include <_gridDir.au3>
 #include <TreeViewConstants.au3>
 #include <GuiTreeView.au3>
 
@@ -49,6 +50,14 @@ Func _FPUIInitialize()
    If FileExists(@ScriptDir&"\GUI\icons\info.ico")==1 Then $_FPUIInfoIcon=@ScriptDir&"\GUI\icons\info.ico"
    If FileExists(@ScriptDir&"\GUI\icons\warning.ico")==1 Then $_FPUIWarningIcon=@ScriptDir&"\GUI\icons\warning.ico"
    If FileExists(@ScriptDir&"\GUI\icons\error.ico")==1 Then $_FPUIErrorIcon=@ScriptDir&"\GUI\icons\error.ico"
+
+   Global $_FPUIBusyIndicator = "", $_FPUIWarningIndicator = "", $_FPUIWarningSound = ""
+   If FileExists(@ScriptDir&"\GUI\busy_indicator_32x32.avi")==1 Then $_FPUIBusyIndicator=@ScriptDir&"\GUI\busy_indicator_32x32.avi"
+   If FileExists(@ScriptDir&"\GUI\warning_indicator_32x32.avi")==1 Then $_FPUIWarningIndicator=@ScriptDir&"\GUI\warning_indicator_32x32.avi"
+   If FileExists(@ScriptDir&"\GUI\attention.mp3")==1 Then $_FPUIWarningSound=@ScriptDir&"\GUI\attention.mp3"
+   If FileExists(_gridDir()&"\data\gui\avis\busy_indicator_32x32.avi")==1 Then $_FPUIBusyIndicator=_gridDir()&"\data\gui\avis\busy_indicator_32x32.avi"
+   If FileExists(_gridDir()&"\data\gui\avis\warning_indicator_32x32.avi")==1 Then $_FPUIBusyIndicator=_gridDir()&"\data\gui\avis\warning_indicator_32x32.avi"
+   If FileExists(_gridDir()&"\data\audio\attention.mp3")==1 Then $_FPUIWarningSound=_gridDir()&"\data\audio\attention.mp3"
 
    ; stores QUI-references for QUIs that subsequently might needs to be updated etc.
    ; (eg. QUIs for background tasks)
@@ -211,7 +220,7 @@ Func _FPUITask($text, $PID = @AutoItPID, $progress = "", $extraParams = "")
 
    Local $args = ""
    If $text <> Default Then $args &= "<text>"&$text&"</text>"
-   $args &= "<progress>"&$progress&"</progress><audio></audio><bkColor></bkColor><avi>S:\sabox\grid\data\GUI\avis\busy_indicator_32x32.avi</avi>"
+   $args &= "<progress>"&$progress&"</progress><audio></audio><bkColor></bkColor><avi>"&$_FPUIBusyIndicator&"</avi>"
 
    If $QUIHandle=="" Then
      $args = $_FPUIQUIDefaults & $args
@@ -231,7 +240,7 @@ EndFunc
 
 ; show status of task and indicate the task needs attention
 Func _FPUITaskAttention($text, $PID = @AutoItPID, $progress = "", $extraParams = "")
-   Return _FPUITask($text, $PID, "", "<bkColor>orange</bkColor><avi>S:\sabox\grid\data\GUI\avis\warning_indicator_32x32.avi</avi><audio><path>S:\sabox\grid\data\audio\Star Trek\fav\alarm01.mp3</path><pause>1861</pause></audio>"&$extraParams)
+   Return _FPUITask($text, $PID, "", "<bkColor>orange</bkColor><avi>"&$_FPUIWarningIndicator&"</avi><audio><path>"&$_FPUIWarningSound&"</path><pause>1861</pause></audio>"&$extraParams)
 EndFunc
 
 ; show status of task and indicate the task is done
