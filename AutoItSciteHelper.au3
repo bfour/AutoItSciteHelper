@@ -41,7 +41,7 @@ Global $includeRecursionMemory[1]
 
 Run($autoItDir&"\SciTe\SciTE.exe "&$CmdLineRaw)
 
-If _Singleton("FP-AutoItDevGrid",1) == 0 Then Exit
+If _Singleton(@ScriptName,1) == 0 Then Exit
 
 WinWait(" SciTE-Lite","")
 $zerocycle=0
